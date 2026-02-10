@@ -1,5 +1,6 @@
---[[
-    GRONMPKIDD GUI V2 - TEAM GRONMPKIDD EXCLUSIVE
+--[[ 
+    TEAM GRONMPKIDD - OFFICIAL GUI 
+    Configurado para: Backdoored Games & Chaos
 ]]
 
 local ScreenGui = Instance.new("ScreenGui")
@@ -7,70 +8,64 @@ local MainFrame = Instance.new("Frame")
 local UIListLayout = Instance.new("UIListLayout")
 local Title = Instance.new("TextLabel")
 
--- Configurações da GUI
+-- Setup da GUI
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-ScreenGui.Name = "GronmpkiddV2"
+ScreenGui.Name = "Gronmpkidd_Official"
 
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = ScreenGui
-MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 MainFrame.BorderSizePixel = 2
 MainFrame.BorderColor3 = Color3.fromRGB(255, 0, 0)
-MainFrame.Position = UDim2.new(0.5, -100, 0.5, -100)
-MainFrame.Size = UDim2.new(0, 200, 0, 250) -- Aumentei o tamanho pros botões
+MainFrame.Position = UDim2.new(0.5, -90, 0.4, -100)
+MainFrame.Size = UDim2.new(0, 180, 0, 260)
 MainFrame.Active = true
 MainFrame.Draggable = true
 
 UIListLayout.Parent = MainFrame
 UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-UIListLayout.Padding = UDim.new(0, 10)
+UIListLayout.Padding = UDim.new(0, 5)
 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
 Title.Parent = MainFrame
-Title.Size = UDim2.new(1, 0, 0, 40)
-Title.Text = "TEAM GRONMPKIDD"
-Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-Title.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+Title.Size = UDim2.new(1, 0, 0, 35)
+Title.Text = "GRONMPKIDD HUB"
+Title.TextColor3 = Color3.fromRGB(255, 0, 0)
+Title.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 Title.Font = Enum.Font.SourceSansBold
-Title.TextSize = 20
+Title.TextSize = 18
 
--- IDs
-local IMAGE_ID = "rbxassetid://134142612717309"
-local MUSIC_ID = "rbxassetid://104357803186796"
+-- Configurações de IDs
+local ID_IMAGEM = "rbxassetid://134142612717309"
+local ID_MUSICA = "rbxassetid://104357803186796"
 
--- Função para criar botões rápido
-local function createButton(name, callback)
-    local btn = Instance.new("TextButton")
-    btn.Parent = MainFrame
-    btn.Size = UDim2.new(0.9, 0, 0, 35)
-    btn.Text = name
-    btn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    btn.Font = Enum.Font.SourceSans
-    btn.TextSize = 18
-    
-    btn.MouseButton1Click:Connect(callback)
-    return btn
+-- Função Criadora de Botões
+local function addBtn(txt, callback)
+    local b = Instance.new("TextButton")
+    b.Parent = MainFrame
+    b.Size = UDim2.new(0.9, 0, 0, 35)
+    b.Text = txt
+    b.BackgroundColor3 = Color3.fromRGB(40, 0, 0)
+    b.TextColor3 = Color3.fromRGB(255, 255, 255)
+    b.Font = Enum.Font.SourceSansBold
+    b.MouseButton1Click:Connect(callback)
 end
 
---- BOTÕES SEPARADOS ---
+--- COMANDOS DO TIME ---
 
--- 1. Botão de Hint
-createButton("SHOW HINT", function()
-    local hint = Instance.new("Hint")
-    hint.Parent = game.Workspace
-    hint.Text = "GRONMPKIDD HACKED TS GAME UP!!!"
-    game.Debris:AddItem(hint, 10) -- Some depois de 10 segundos
+addBtn("📢 HINT MESSAGE", function()
+    local h = Instance.new("Hint", game.Workspace)
+    h.Text = "GRONMPKIDD HACKED TS GAME UP!!!"
+    task.wait(10)
+    h:Destroy()
 end)
 
--- 2. Botão de Decal Spam
-createButton("DECAL SPAM", function()
+addBtn("🖼️ DECAL SPAM", function()
     for _, obj in pairs(game.Workspace:GetDescendants()) do
         if obj:IsA("BasePart") then
-            local faces = {Enum.NormalId.Front, Enum.NormalId.Back, Enum.NormalId.Top, Enum.NormalId.Bottom, Enum.NormalId.Left, Enum.NormalId.Right}
-            for _, face in pairs(faces) do
+            for _, face in pairs(Enum.NormalId:GetEnumItems()) do
                 local d = Instance.new("Decal")
-                d.Texture = IMAGE_ID
+                d.Texture = ID_IMAGEM
                 d.Face = face
                 d.Parent = obj
             end
@@ -78,36 +73,35 @@ createButton("DECAL SPAM", function()
     end
 end)
 
--- 3. Botão de Skybox
-createButton("CHANGE SKY", function()
-    local sky = Instance.new("Sky")
-    sky.SkyboxBk = IMAGE_ID
-    sky.SkyboxDn = IMAGE_ID
-    sky.SkyboxFt = IMAGE_ID
-    sky.SkyboxLf = IMAGE_ID
-    sky.SkyboxRt = IMAGE_ID
-    sky.SkyboxUp = IMAGE_ID
-    sky.Parent = game.Lighting
+addBtn("🌌 CHANGE SKY", function()
+    local s = Instance.new("Sky", game.Lighting)
+    s.SkyboxBk = ID_IMAGEM
+    s.SkyboxDn = ID_IMAGEM
+    s.SkyboxFt = ID_IMAGEM
+    s.SkyboxLf = ID_IMAGEM
+    s.SkyboxRt = ID_IMAGEM
+    s.SkyboxUp = ID_IMAGEM
 end)
 
--- 4. Botão de Partículas (Players)
-createButton("PARTICLES", function()
-    for _, player in pairs(game.Players:GetPlayers()) do
-        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-            local p = Instance.new("ParticleEmitter")
-            p.Texture = IMAGE_ID
-            p.Size = NumberSequence.new(2)
-            p.Parent = player.Character.HumanoidRootPart
+addBtn("✨ PARTICLES", function()
+    for _, p in pairs(game.Players:GetPlayers()) do
+        if p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
+            local pe = Instance.new("ParticleEmitter", p.Character.HumanoidRootPart)
+            pe.Texture = ID_IMAGEM
+            pe.Size = NumberSequence.new(3)
+            pe.Rate = 100
         end
     end
 end)
 
--- 5. Botão de Música
-createButton("PLAY MUSIC", function()
-    local s = Instance.new("Sound")
-    s.SoundId = MUSIC_ID
-    s.Volume = 5
-    s.Looped = true
-    s.Parent = game.Workspace
-    s:Play()
+addBtn("🎶 PLAY MUSIC", function()
+    local snd = Instance.new("Sound", game.Workspace)
+    snd.SoundId = ID_MUSICA
+    snd.Volume = 3
+    snd.Looped = true
+    snd:Play()
+end)
+
+addBtn("❌ DESTROY GUI", function()
+    ScreenGui:Destroy()
 end)
