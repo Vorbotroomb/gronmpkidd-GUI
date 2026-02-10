@@ -1,0 +1,103 @@
+--[[
+    GRONMPKIDD GUI - Admin Tools
+    Nota: Use este script dentro do seu próprio jogo.
+]]
+
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local DecalButton = Instance.new("TextButton")
+local MusicButton = Instance.new("TextButton")
+
+-- Configurações da GUI
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Name = "GronmpkiddGUI"
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+MainFrame.Position = UDim2.new(0.5, -100, 0.5, -75)
+MainFrame.Size = UDim2.new(0, 200, 0, 150)
+MainFrame.Active = true
+MainFrame.Draggable = true
+
+Title.Parent = MainFrame
+Title.Size = UDim2.new(1, 0, 0, 30)
+Title.Text = "GRONMPKIDD HACK"
+Title.TextColor3 = Color3.fromRGB(255, 0, 0)
+Title.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+
+-- IDs configurados
+local IMAGE_ID = "rbxassetid://134142612717309"
+local MUSIC_ID = "rbxassetid://104357803186796"
+
+--- FUNÇÕES ---
+
+local function executeChaos()
+    -- 1. Hint Message
+    local hint = Instance.new("Hint")
+    hint.Parent = game.Workspace
+    hint.Text = "GRONMPKIDD HACKED TS GAME UP!!!"
+    
+    -- 2. Skybox Change
+    local sky = Instance.new("Sky")
+    sky.SkyboxBk = IMAGE_ID
+    sky.SkyboxDn = IMAGE_ID
+    sky.SkyboxFt = IMAGE_ID
+    sky.SkyboxLf = IMAGE_ID
+    sky.SkyboxRt = IMAGE_ID
+    sky.SkyboxUp = IMAGE_ID
+    sky.Parent = game.Lighting
+    
+    -- 3. Decal Spam (em todas as partes do jogo)
+    for _, obj in pairs(game.Workspace:GetDescendants()) do
+        if obj:IsA("BasePart") then
+            local decal = Instance.new("Decal")
+            decal.Texture = IMAGE_ID
+            decal.Face = Enum.NormalId.Front
+            decal.Parent = obj
+            
+            -- Adiciona em todos os lados para o "Spam" total
+            local faces = {Enum.NormalId.Back, Enum.NormalId.Top, Enum.NormalId.Bottom, Enum.NormalId.Left, Enum.NormalId.Right}
+            for _, face in pairs(faces) do
+                local d = decal:Clone()
+                d.Face = face
+                d.Parent = obj
+            end
+        end
+    end
+
+    -- 4. Particles nos Players
+    for _, player in pairs(game.Players:GetPlayers()) do
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local particles = Instance.new("ParticleEmitter")
+            particles.Texture = IMAGE_ID
+            particles.Parent = player.Character.HumanoidRootPart
+            particles.Speed = NumberRange.new(10)
+            particles.Rate = 50
+        end
+    end
+end
+
+local function playTheme()
+    local sound = Instance.new("Sound")
+    sound.SoundId = MUSIC_ID
+    sound.Parent = game.Workspace
+    sound.Looped = true
+    sound.Volume = 2
+    sound:Play()
+end
+
+--- BOTÕES ---
+
+DecalButton.Parent = MainFrame
+DecalButton.Text = "DECAL/SKY SPAM"
+DecalButton.Size = UDim2.new(0.8, 0, 0, 30)
+DecalButton.Position = UDim2.new(0.1, 0, 0.3, 0)
+DecalButton.MouseButton1Click:Connect(executeChaos)
+
+MusicButton.Parent = MainFrame
+MusicButton.Text = "PLAY THEME"
+MusicButton.Size = UDim2.new(0.8, 0, 0, 30)
+MusicButton.Position = UDim2.new(0.1, 0, 0.6, 0)
+MusicButton.MouseButton1Click:Connect(playTheme)
